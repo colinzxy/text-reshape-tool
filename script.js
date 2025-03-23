@@ -24,9 +24,12 @@ function convertText() {
             break;
         }
 
-        if (group.length === 7) {
-            rows.push(group);
+        // Ensure exactly 7 fields by padding if necessary
+        while (group.length < 7) {
+            group.unshift('');
         }
+
+        rows.push(group);
     }
 
     rows.reverse();
