@@ -39,7 +39,7 @@
             cursor: pointer;
             border: none;
             background-color: #007acc;
-            colour: white;
+            color: white;
             border-radius: 5px;
             font-size: 16px;
         }
@@ -62,13 +62,21 @@
     <script>
         function convertText() {
             const input = document.getElementById('inputText').value.trim().split('\n');
-            const groupSize = 8;
-            let output = '';
+            const groupSize = 7;
+            let rows = [];
 
             for (let i = 0; i < input.length; i += groupSize) {
-                const row = input.slice(i, i + groupSize).join('\t');
-                output += row + '\n';
+                let group = input.slice(i, i + groupSize);
+                // Clean phone number (index 1)
+                group[1] = group[1].replace(/\s+/g, '');
+                rows.push(group);
             }
+
+            // Reverse to get chronological order (earliest first)
+            rows.reverse();
+
+            // Convert each group to a tab-separated line
+            const output = rows.map(row => row.join('\t')).join('\n');
 
             document.getElementById('outputText').value = output.trim();
         }
