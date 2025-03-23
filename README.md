@@ -1,27 +1,25 @@
 # Text Reshape Converter
 
-A simple web tool that converts line-based text input into a reshaped row-based format. It takes every group of 8 lines and transforms them into a single row separated by tabs.
+A simple web tool that converts line-based text input into a reshaped and sorted row-based format. It takes every group of 7 lines and transforms them into a single row separated by tabs, then orders them by date and time (earliest first).
 
 ## How It Works
 - Paste your text data into the left-hand input box.
-- Click **Convert** to reshape the data.
+- Click **Convert** to reshape and sort the data.
 - Copy the result using the **Copy Output** button.
 
-### Data format expected:
-Each group of 8 lines should be in the following order:
-1. Time duration (e.g., `00:01:25`)
-2. Text (e.g., `my home`)
-3. Phone number (e.g., `+447123123123`)
-4. Empty line
-5. Date and time (e.g., `17 Feb 2025 13:40:25`)
-6. Text (e.g., `Something`)
-7. Money value (e.g., `2.21`)
-8. Empty line
+### Data format expected (each group of 7 lines):
+1. Text (e.g., `voice`)
+2. Phone number (e.g., `+44 71234 123 123` — spaces will be removed automatically)
+3. Date (e.g., `19 Jan 2025`)
+4. Time (e.g., `13:40:36`)
+5. Text (e.g., `description`)
+6. Money (e.g., `£2.50`)
+7. Time duration (e.g., `00:01:25`)
 
-The tool reshapes each 8-line group into one row, separated by tabs.
+The tool reshapes each 7-line group into one row, separated by tabs, and reverses the input order (as the input is provided in reverse chronological order) to sort them from the earliest to the latest.
 
 ## Hosting
-This site is hosted using GitHub Pages.
+This site can be hosted using GitHub Pages.
 
 ### How to deploy:
 1. Clone or fork the repository.
@@ -33,21 +31,20 @@ This site is hosted using GitHub Pages.
 ## Example
 **Input:**
 ```
+voice
++44 71234 123 123
+19 Jan 2025
+13:40:36
+description
+£2.50
 00:01:25
-my home
-+447123123123
-
-17 Feb 2025 13:40:25
-Something
-2.21
-
 ```
 
 **Output:**
 ```
-00:01:25\tmy home\t+447123123123\t\t17 Feb 2025 13:40:25\tSomething\t2.21\t
+voice	+4471234123123	19 Jan 2025	13:40:36	description	£2.50	00:01:25
 ```
 
 ---
 
-Feel free to contribute or report issues!
+Feel free to contribute or raise issues!
