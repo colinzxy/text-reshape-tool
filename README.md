@@ -1,50 +1,74 @@
 # Text Reshape Converter
 
-A simple web tool that converts line-based text input into a reshaped and sorted row-based format. It takes every group of 7 lines and transforms them into a single row separated by tabs, then orders them by date and time (earliest first).
+## Description
 
-## How It Works
-- Paste your text data into the left-hand input box.
-- Click **Convert** to reshape and sort the data.
-- Copy the result using the **Copy Output** button.
+A simple web-based tool that processes mixed-format text input data (with either 6 or 7 lines per group), cleans phone numbers, aligns fields into a standardised 7-column tab-separated format, and outputs the data in chronological order.
 
-### Data format expected (each group of 7 lines):
-1. Text (e.g., `voice`)
-2. Phone number (e.g., `+44 71234 123 123` — spaces will be removed automatically)
+## Features
+
+- Accepts input where each data block is either 6 or 7 lines long.
+- Automatically detects whether the first line is a text label (n=7) or a phone number line (n=6).
+- Cleans phone numbers by removing spaces.
+- Standardises all output rows into a 7-column structure, adding empty placeholders where necessary.
+- Reverses input order to display data from earliest to latest.
+- Includes a user-friendly interface with copy-to-clipboard functionality.
+
+## Input Structure
+
+For **n = 7** lines per data block:
+
+1. Text (e.g., "From abroad")
+2. Phone number (e.g., `+44 71234 123 123`)
 3. Date (e.g., `19 Jan 2025`)
 4. Time (e.g., `13:40:36`)
-5. Text (e.g., `description`)
+5. Text description
 6. Money (e.g., `£2.50`)
-7. Time duration (e.g., `00:01:25`)
+7. Duration (e.g., `00:01:25`)
 
-The tool reshapes each 7-line group into one row, separated by tabs, and reverses the input order (as the input is provided in reverse chronological order) to sort them from the earliest to the latest.
+For **n = 6** lines per data block:
 
-## Hosting
-This site can be hosted using GitHub Pages.
+1. Phone number (e.g., `+44 71234 123 123`)
+2. Date (e.g., `19 Jan 2025`)
+3. Time (e.g., `13:40:36`)
+4. Text description
+5. Money (e.g., `£2.50`)
+6. Duration (e.g., `00:01:25`)
 
-### How to deploy:
-1. Clone or fork the repository.
-2. Ensure `index.html` is present in the root.
-3. Go to **Settings > Pages** in the repository.
-4. Under **Branch**, select `main` and `/ (root)`.
-5. Save and access your site via the provided GitHub Pages link.
+The tool will insert an empty text field as the first column for all 6-line entries.
 
-## Example
-**Input:**
+## Example Input (Mixed n=7 and n=6):
+
 ```
-voice
+From abroad
 +44 71234 123 123
 19 Jan 2025
 13:40:36
-description
+Sample text
 £2.50
 00:01:25
++44 70123 456 789
+18 Jan 2025
+12:30:15
+Another text
+£1.75
+00:00:50
 ```
 
-**Output:**
+## Example Output:
+
 ```
-voice	+4471234123123	19 Jan 2025	13:40:36	description	£2.50	00:01:25
+	+4470123456789	18 Jan 2025	12:30:15	Another text	£1.75	00:00:50
+From abroad	+4471234123123	19 Jan 2025	13:40:36	Sample text	£2.50	00:01:25
 ```
 
----
+## Deployment Instructions
 
-Feel free to contribute or raise issues!
+1. Upload `index.html` to the root of a GitHub repository.
+2. Navigate to **Settings > Pages**.
+3. Select `main` branch and `/ (root)` folder.
+4. Save and access the published page via the provided GitHub Pages link.
+
+## License
+
+Free to use and modify. Contributions welcome!
+

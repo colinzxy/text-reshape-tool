@@ -62,20 +62,42 @@
     <script>
         function convertText() {
             const input = document.getElementById('inputText').value.trim().split('\n');
-            const groupSize = 7;
             let rows = [];
+            let i = 0;
 
-            for (let i = 0; i < input.length; i += groupSize) {
-                let group = input.slice(i, i + groupSize);
-                // Clean phone number (index 1)
-                group[1] = group[1].replace(/\s+/g, '');
-                rows.push(group);
+            while (i < input.length) {
+                const firstLine = input[i].trim();
+
+                // Determine if this group is n=7 or n=6
+                const isTextLine = /[a-zA-Z]/.test(firstLine); // likely text if contains letters
+                const isLikelyPhone = /^[\d\s\+]+$/.test(firstLine); // only digits, pluses and spaces
+
+                let group = [];
+
+                if (isTextLine) {
+                    // n=7
+                    group = input.slice(i, i + 7);
+                    group[1] = group[1].replace(/\s+/g, ''); // Clean phone number
+                    i += 7;
+                } else if (isLikelyPhone) {
+                    // n=6, prepend empty string for the text field
+                    group = [''].concat(input.slice(i, i + 6));
+                    group[1] = group[1].replace(/\s+/g, ''); // Clean phone number
+                    i += 6;
+                } else {
+                    // Unexpected format, break to avoid infinite loop
+                    alert('Unrecognised format at line: ' + (i + 1));
+                    break;
+                }
+
+                if (group.length === 7) {
+                    rows.push(group);
+                }
             }
 
-            // Reverse to get chronological order (earliest first)
+            // Reverse to chronological order (earliest first)
             rows.reverse();
 
-            // Convert each group to a tab-separated line
             const output = rows.map(row => row.join('\t')).join('\n');
 
             document.getElementById('outputText').value = output.trim();
